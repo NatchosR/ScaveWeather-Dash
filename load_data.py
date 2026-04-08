@@ -15,8 +15,14 @@ def load_once_weather_data(path="./data/WEATHERDATA_ALL.csv"):
         heap_index = weather_df.columns.get_loc('Heap')
         weather_df = weather_df.iloc[:, :heap_index]
 
-    # Step 3: Convert 'time' column to datetime
-    weather_df['datetime'] = pd.to_datetime(weather_df['datetime'], errors='coerce')
+    # Step 3: Convert 'datetime' column using explicit European format (DD/MM/YYYY HH:MM)
+    # This prevents the US/UK ambiguity that shifts your dates
+    weather_df['datetime'] = pd.to_datetime(
+        weather_df['datetime'], 
+        format='%d/%m/%Y %H:%M', 
+        errors='coerce'
+    )
+    
     weather_df = weather_df.sort_values('datetime').reset_index(drop=True)
 
     # Step 3.5: Convert back to string in ISO format for safe storage in Store
