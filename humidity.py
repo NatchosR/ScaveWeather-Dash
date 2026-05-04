@@ -3,9 +3,6 @@ import numpy as np
 from dash import html, dcc
 import dash_bootstrap_components as dbc
 
-
-
-
 def humidity_stats(df):
 
     """
@@ -20,23 +17,30 @@ def humidity_stats(df):
 
     avg_vpd = df['vpd'].mean() if 'vpd' in df.columns else np.nan
 
-    # Set background color based on AVG VPD
-    if avg_vpd < 0.5:
-        bg_color = "rgba(200,255,200,0.8)"  # Light green
-    elif avg_vpd <= 0.75:
-        bg_color = "rgba(255,220,150,0.8)"  # Light orange
-    else:
-        bg_color = "rgba(255,200,200,0.8)"  # Light red
-
-    if avg_vpd < 0.5:
+    if avg_vpd < 0.8:
         stress_text = "LOW"
-        color_stress = 'rgba(0,128,0,1)'
-    elif avg_vpd <= 0.75:
-        stress_text = "HIGH"
-        color_stress = 'rgba(255,128,0,1)'
+        color_stress = 'rgba(144, 238, 144)'
+        bg_color = "rgba(200,255,200,0.8)"  # Light green
+
+    elif avg_vpd <= 1.2:
+        stress_text = "OPTIMAL"
+        color_stress = 'rgba(34, 139, 34)'
+        bg_color = "rgba(200,255,200,0.8)"  # green
+
+    elif avg_vpd <= 1.6:
+        stress_text = "MODERATE"
+        color_stress = 'rgba(255, 215, 0)'
+        bg_color = "rgba(255,220,150,0.8)"  # yellow - gold
+
+    elif avg_vpd < 2.2:
+        stress_text = "HIGH STRESS"
+        color_stress = 'rgba(255, 140, 0)'
+        bg_color = "rgba(255,220,150,0.8)"  # orange
+    
     else:
         stress_text = "CRITICAL"
-        color_stress = 'rgba(255,0,0,1)'
+        color_stress = 'rgba(220, 20, 60)'
+        bg_color = "rgba(255,200,200,0.8)"  # Light red
 
     humidity_stats["avg_humidity"] = avg_humidity
     humidity_stats["humidity_25"] = humidity_25

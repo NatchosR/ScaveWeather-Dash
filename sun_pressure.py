@@ -14,7 +14,7 @@ def sun_stats(df):
     uvi_index = weather_df_day.columns.get_loc('uvi')
     weather_df_day = weather_df_day.iloc[:, :uvi_index+1]
     weather_df_day['hour'] = weather_df_day['datetime'].dt.hour
-    weather_df_day = weather_df_day[weather_df_day['hour'].isin([8, 12])]
+    weather_df_day = weather_df_day[weather_df_day['hour'].isin([8,9,12,13])]
 
     ## --- BASIC STATISTICS CALCULATIONS --- ##
 
