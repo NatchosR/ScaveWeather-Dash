@@ -25,11 +25,17 @@ def rain_stats(df):
         rain_stats['total_days'] = total_days
 
     # 2) Monthly total: last value of rain_monthly (assuming cumulative)
-    # temporary (debug)
+    # FIX: Take the last 3 values and select the maximum to handle DST shifts/outliers
     if 'rain_monthly' in df.columns:
         monthly_series = df['rain_monthly'].dropna()
+        
         if len(monthly_series) > 0:
-            monthly_total = monthly_series.iloc[-1]
+            # Get the last 3 records (or fewer if dataset is small)
+            last_few = monthly_series.tail(3)
+            
+            # Take the maximum of these few records
+            # Since it's cumulative, the max should represent the true end-of-month total
+            monthly_total = last_few.max()
         else:
             monthly_total = np.nan
     else:
