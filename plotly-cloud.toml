@@ -1,0 +1,7 @@
+[app]
+name = "ScaveWeather-Cidadelhe"  # The name of your existing app on Plotly Cloud
+workspace = "7cdb3b85-3667-42e8-87ed-01ee7b08f78c" # Your workspace ID or name
+main_file = "app.py"    # The entry point of your Dash app (e.g., app.py, index.py)
+
+[deployment]
+requirements_file = "requirements.txt"
